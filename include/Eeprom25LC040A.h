@@ -40,7 +40,7 @@ public:
     bool write(uint32_t address, const uint8_t* data, size_t size) override;
 
     /**
-     * @brief Читает один байт из памяти
+     * @brief Читает 1 байт из памяти
      * @param address Адрес для чтения
      * @param value Считанное значение
      * @return true, если операция успешна
@@ -48,7 +48,7 @@ public:
     bool readByte(uint32_t address, uint8_t& value) override;
 
     /**
-     * @brief Записывает один байт в память
+     * @brief Записывает 1 байт в память
      * @param address Адрес для записи
      * @param value Значение байта
      * @return true, если операция успешна
