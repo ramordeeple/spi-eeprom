@@ -19,7 +19,7 @@ public:
     virtual bool readByte(uint32_t address, uint8_t &value) = 0;
 
     /**
-    * @brief Чтение 1 байта
+    * @brief Запись 1 байта
     */
     virtual bool writeByte(uint32_t address, uint8_t value) = 0;
 
