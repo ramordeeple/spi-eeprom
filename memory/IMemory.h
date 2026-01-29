@@ -23,6 +23,5 @@ public:
     */
     virtual bool writeByte(uint32_t address, uint8_t value) = 0;
 
-
     virtual ~IMemory() = default;
 };
