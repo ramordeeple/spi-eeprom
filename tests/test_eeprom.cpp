@@ -1,7 +1,5 @@
 /**
  * @brief Тест драйвера 25LC040A
- *
- * Проверяет базовую работу методов writeByte/readByte с SPI-заглушкой
  */
 
 #include <cassert>
