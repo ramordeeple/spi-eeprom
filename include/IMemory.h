@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <cstddef>
 #include <cstdint>
 
 class IMemory {
@@ -11,7 +12,7 @@ public:
     /**
      * @brief Чтение массива байт
      */
-    virtual bool read(uint32_t address, uint8_t *data, size_t) = 0;
+    virtual bool read(uint32_t address, uint8_t *data, size_t size) = 0;
 
     /**
     * @brief Запись массива байт
