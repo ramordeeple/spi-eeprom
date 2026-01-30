@@ -9,6 +9,34 @@ const uint32_t MEMORY_SIZE = 512;
 
 Eeprom25LC040A::Eeprom25LC040A(ISpiDriver& spi) : spi_(spi) {}
 
+bool Eeprom25LC040A::readBit(uint32_t address, uint8_t bitPosition, bool& value) {
+    if (bitPosition > 7) return false;
+
+    uint8_t byteValue = 0;
+
+    if (!readByte(address, byteValue)) return false;
+
+    value = (byteValue >> bitPosition) & 0x01;
+
+    return true;
+}
+
+bool Eeprom25LC040A::writeBit(uint32_t address, uint8_t bitPosition, bool value) {
+    if (bitPosition > 7) return false;
+
+    uint8_t byteValue = 0;
+
+    if (!readByte(address, byteValue)) return false;
+
+    if (value) {
+        byteValue |= (1 << bitPosition);
+    } else {
+        byteValue &= ~(1 << bitPosition);
+    }
+
+    return writeByte(address, byteValue);
+}
+
 bool Eeprom25LC040A::read(uint32_t address, uint8_t *data, size_t size) {
     if (data == nullptr || size == 0)
         return false;

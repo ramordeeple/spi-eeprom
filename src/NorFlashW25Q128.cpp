@@ -6,6 +6,36 @@ using namespace std;
 
 NorFlashW25Q128::NorFlashW25Q128(ISpiDriver& spi) : spi_(spi) {}
 
+bool NorFlashW25Q128::readBit(uint32_t address, uint8_t bitPosition, bool& value) {
+    if (bitPosition > 7) {
+        return false;
+    }
+
+    uint8_t byteValue = 0;
+    if (!readByte(address, byteValue)) {
+        return false;
+    }
+
+    value = (byteValue >> bitPosition) & 0x01;
+    return true;
+}
+
+bool NorFlashW25Q128::writeBit(uint32_t address, uint8_t bitPosition, bool value) {
+    if (bitPosition > 7) return false;
+
+    uint8_t byteValue = 0;
+
+    if (!readByte(address, byteValue)) return false;
+
+    if (value) {
+        byteValue |= (1 << bitPosition);
+    } else {
+        byteValue &= ~(1 << bitPosition);
+    }
+
+    return writeByte(address, byteValue);
+}
+
 bool NorFlashW25Q128::read(uint32_t address, uint8_t *data, size_t size) {
     spi_.select();
     spi_.transfer(static_cast<uint8_t>(Command::Read));
