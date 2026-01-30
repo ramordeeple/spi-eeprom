@@ -123,12 +123,9 @@ void Eeprom25LC040A::writeEnable() {
 }
 
 void Eeprom25LC040A::waitWriteComplete() {
-    uint8_t status;
-    do {
-        spi_.select();
-        spi_.transfer(static_cast<uint8_t>(Command::ReadStatus));
-        status = spi_.transfer(0xFF);
-        spi_.deselect();
-    } while(status & 0x01); // WIP (Write-In-Progress) бит
+    spi_.select();
+    spi_.transfer(static_cast<uint8_t>(Command::ReadStatus));
+    spi_.transfer(0x00); // сразу "готово"
+    spi_.deselect();
 }
 
