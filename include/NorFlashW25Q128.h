@@ -18,43 +18,39 @@
 class NorFlashW25Q128 : public IMemory {
 public:
     /**
-     * @brief Конструктор драйвера NOR Flash
-     * @param spi Ссылка на SPI драйвер
-     */
+    * @brief Конструктор драйвера NOR Flash
+    * @param spi Ссылка на SPI драйвер
+    */
     explicit NorFlashW25Q128(ISpiDriver& spi);
 
     /**
-     * @brief Читает массив байт из памяти
-     * @param address Адрес начала чтения
-     * @param data Буфер для чтения
-     * @param size Количество байт
-     * @return true, если операция успешна
-     */
-    bool read(uint32_t address, uint8_t* data, size_t size) override;
+    * @see IMemory::readBit()
+    */
+    bool readBit(uint32_t address, uint8_t bitPosition, bool &value) override;
 
     /**
-     * @brief Записывает массив байт в память
-     * @param address Адрес начала записи
-     * @param data Буфер с данными
-     * @param size Количество байт
-     * @return true, если операция успешна
-     */
-    bool write(uint32_t address, const uint8_t* data, size_t size) override;
+    * @see IMemory::writeBit()
+    */
+    bool writeBit(uint32_t address, uint8_t bitPosition, bool value) override;
 
     /**
-     * @brief Читает один байт из памяти
-     * @param address Адрес для чтения
-     * @param value Считанное значение
-     * @return true, если операция успешна
-     */
-    bool readByte(uint32_t address, uint8_t& value) override;
+    * @see IMemory::read()
+    */
+    bool read(uint32_t address, uint8_t *data, size_t size) override;
 
     /**
-     * @brief Записывает один байт в память
-     * @param address Адрес для записи
-     * @param value Значение байта
-     * @return true, если операция успешна
-     */
+    * @see IMemory::write()
+    */
+    bool write(uint32_t address, const uint8_t *data, size_t size) override;
+
+    /**
+    * @see IMemory::readByte()
+    */
+    bool readByte(uint32_t address, uint8_t &value) override;
+
+    /**
+    * @see IMemory::writeByte()
+    */
     bool writeByte(uint32_t address, uint8_t value) override;
 
 private:
