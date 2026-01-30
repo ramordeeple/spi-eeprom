@@ -1,11 +1,10 @@
 /**
-* @brief Драйвер SPI EEPROM Microchip 25LC040A
- *
- * Особенности:
- * - запись возможна по байтам
- * - требуется команда Write Enable
- * - необходимо ожидание завершения записи
- */
+  * @brief Драйвер SPI EEPROM Microchip 25LC040A
+  * Особенности:
+  * - запись возможна по байтам
+  * - требуется команда Write Enable
+  * - необходимо ожидание завершения записи
+  */
 
 #pragma once
 
@@ -18,39 +17,39 @@
 class Eeprom25LC040A : public IMemory {
 public:
     /**
-    * @brief Конструктор драйвера EEPROM
-    * @param spi SPI-интерфейс для взаимодействия с микросхемой
-    */
+     * @brief Конструктор драйвера EEPROM
+     * @param spi SPI-интерфейс для взаимодействия с микросхемой
+     */
     explicit Eeprom25LC040A(ISpiDriver &spi);
 
     /**
-    * @see IMemory::readBit()
-    */
+     * @see IMemory::readBit()
+     */
     bool readBit(uint32_t address, uint8_t bitPosition, bool &value) override;
 
     /**
-    * @see IMemory::writeBit()
-    */
+     * @see IMemory::writeBit()
+     */
     bool writeBit(uint32_t address, uint8_t bitPosition, bool value) override;
 
     /**
-    * @see IMemory::read()
-    */
+     * @see IMemory::read()
+     */
     bool read(uint32_t address, uint8_t *data, size_t size) override;
 
     /**
-    * @see IMemory::write()
-    */
+     * @see IMemory::write()
+     */
     bool write(uint32_t address, const uint8_t *data, size_t size) override;
 
     /**
-    * @see IMemory::readByte()
-    */
+     * @see IMemory::readByte()
+     */
     bool readByte(uint32_t address, uint8_t &value) override;
 
     /**
-    * @see IMemory::writeByte()
-    */
+     * @see IMemory::writeByte()
+     */
     bool writeByte(uint32_t address, uint8_t value) override;
 
 private:

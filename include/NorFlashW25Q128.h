@@ -5,7 +5,7 @@
  * - перед записью требуется стирание сектора
  * - запись выполняется страницами
  * - больший адресный диапазон
-*/
+ */
 
 #pragma once
 
@@ -18,39 +18,39 @@
 class NorFlashW25Q128 : public IMemory {
 public:
     /**
-    * @brief Конструктор драйвера NOR Flash
-    * @param spi Ссылка на SPI драйвер
-    */
+     * @brief Конструктор драйвера NOR Flash
+     * @param spi Ссылка на SPI драйвер
+     */
     explicit NorFlashW25Q128(ISpiDriver& spi);
 
     /**
-    * @see IMemory::readBit()
-    */
+     * @see IMemory::readBit()
+     */
     bool readBit(uint32_t address, uint8_t bitPosition, bool &value) override;
 
     /**
-    * @see IMemory::writeBit()
-    */
+     * @see IMemory::writeBit()
+     */
     bool writeBit(uint32_t address, uint8_t bitPosition, bool value) override;
 
     /**
-    * @see IMemory::read()
-    */
+     * @see IMemory::read()
+     */
     bool read(uint32_t address, uint8_t *data, size_t size) override;
 
     /**
-    * @see IMemory::write()
-    */
+     * @see IMemory::write()
+     */
     bool write(uint32_t address, const uint8_t *data, size_t size) override;
 
     /**
-    * @see IMemory::readByte()
-    */
+     * @see IMemory::readByte()
+     */
     bool readByte(uint32_t address, uint8_t &value) override;
 
     /**
-    * @see IMemory::writeByte()
-    */
+     * @see IMemory::writeByte()
+     */
     bool writeByte(uint32_t address, uint8_t value) override;
 
 private:
