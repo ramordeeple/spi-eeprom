@@ -8,10 +8,12 @@
 */
 
 #pragma once
-#include "IMemory.h"
-#include "ISpiDriver.h"
+
 #include <cstdint>
 #include <cstddef>
+
+#include "IMemory.h"
+#include "ISpiDriver.h"
 
 class NorFlashW25Q128 : public IMemory {
 public:

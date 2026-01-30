@@ -1,5 +1,6 @@
-#include "../include/NorFlashW25Q128.h"
 #include <algorithm>
+
+#include "../include/NorFlashW25Q128.h"
 
 using namespace std;
 
