@@ -5,6 +5,7 @@
  */
 
 #include <cassert>
+#include <iomanip>
 #include <iostream>
 #include <ostream>
 #include <_stdlib.h>
@@ -18,6 +19,7 @@ MockBitBangSpi spi;
 Eeprom25LC040A eeprom(spi);
 
 void setup();
+void printLog(const string&);
 void testWriteByte();
 void testReadByte();
 void testWriteReadArray();
@@ -36,6 +38,27 @@ void setup() {
     spi.clearLog();
 }
 
+/** @brief Вывод лога SPI операций */
+void printLog(const string& testName) {
+    cout << "[" << testName << "] SPI Operations:" << endl;
+    const auto& log = spi.getLog();
+
+    for (size_t i = 0; i < log.size(); ++i) {
+        uint8_t b = log[i];
+
+        // Расшифровка специальных маркеров
+        if (b == 0xAA) {
+            cout << "  -> SELECT" << endl;
+        } else if (b == 0xBB) {
+            cout << "  -> DESELECT" << endl;
+        } else {
+            cout << "  -> TRANSFER: 0x" << hex << uppercase
+                 << setw(2) << setfill('0') << static_cast<int>(b) << dec << endl;
+        }
+    }
+    cout << "  Total operations: " << log.size() << endl << endl;
+}
+
 /** @brief Тест записи 1 байта */
 void testWriteByte() {
     setup();
@@ -44,12 +67,9 @@ void testWriteByte() {
     uint8_t value = 0xAB;
 
     bool ok = eeprom.writeByte(addr, value);
-    assert(ok);
+    assert(ok && "writeByte failed");
 
-    cout << "SPI Log after writeByte: " << endl;
-    for (auto b : spi.getLog())
-        cout << hex << static_cast<int>(b) << endl << endl;
-
+    printLog("testWriteByte");
 }
 
 /** @brief Тест чтения 1 байта */
@@ -60,13 +80,12 @@ void testReadByte() {
     uint8_t value = 0;
 
     bool ok = eeprom.readByte(addr, value);
-    assert(ok);
+    assert(ok && "readByte failed");
 
-    cout << "SPI Log after readByte: " << endl;
+    cout << "Read value: 0x" << hex << uppercase
+         << setw(2) << setfill('0') << static_cast<int>(value) << dec << endl;
 
-    for (auto b : spi.getLog())
-        cout << hex << static_cast<int>(b) << endl << endl;
-
+    printLog("testReadByte");
 }
 
 /** @brief Тест записи и чтения массива байт */
@@ -79,14 +98,18 @@ void testWriteReadArray() {
     uint8_t dataRead[ArraySize] = {0};
 
     bool ok = eeprom.write(addr, dataWrite, ArraySize);
-    assert(ok);
+    assert(ok && "write failed");
 
     ok = eeprom.read(addr, dataRead, ArraySize);
-    assert(ok);
+    assert(ok && "read failed");
 
-    cout << "SPI Log after writeReadArray: " << endl;
-    for (auto b : spi.getLog())
-        cout << hex << static_cast<int>(b) << endl << endl;
+    cout << "Written: ";
+    for (size_t i = 0; i < ArraySize; ++i) {
+        cout << "0x" << hex << uppercase << setw(2) << setfill('0')
+             << static_cast<int>(dataWrite[i]) << " ";
+    }
+    cout << dec << endl;
 
+    printLog("testWriteReadArray");
 }
 
