@@ -6,7 +6,6 @@
 #include <iomanip>
 #include <iostream>
 #include <ostream>
-#include <_stdlib.h>
 
 #include "../include/Eeprom25LC040A.h"
 #include "MockBitBangSpi.h"
